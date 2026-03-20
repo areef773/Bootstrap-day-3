@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Update Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f7;
+        }
+        .profile-container {
+            width: 420px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px gray;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        textarea {
+            resize: vertical;
+            height: 80px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #6f42c1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #5936a2;
+        }
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+        .success {
+            color: green;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <h2>Update Profile</h2>
+    <form onsubmit="return validateProfile()">
+
+        <label>Full Name:</label>
+        <input type="text" id="name">
+        <div class="error" id="nameError"></div>
+
+        <label>Email:</label>
+        <input type="text" id="email">
+        <div class="error" id="emailError"></div>
+
+        <label>Phone Number:</label>
+        <input type="tel" id="phone">
+        <div class="error" id="phoneError"></div>
+
+        <label>Gender:</label>
+        <select id="gender">
+            <option value="">--Select--</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <div class="error" id="genderError"></div>
+
+        <label>Address:</label>
+        <textarea id="address"></textarea>
+        <div class="error" id="addressError"></div>
+
+        <label>Upload Profile Picture:</label>
+        <input type="file" id="profilePic">
+
+        <div class="success" id="successMsg"></div>
+
+        <button type="submit">Update Profile</button>
+    </form>
+</div>
+
+<script>
+function validateProfile() {
+    let valid = true;
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let gender = document.getElementById("gender").value;
+    let address = document.getElementById("address").value;
+
+    // Clear messages
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("phoneError").innerHTML = "";
+    document.getElementById("genderError").innerHTML = "";
+    document.getElementById("addressError").innerHTML = "";
+    document.getElementById("successMsg").innerHTML = "";
+
+    if (name === "") {
+        document.getElementById("nameError").innerHTML = "Name is required";
+        valid = false;
+    }
+
+    if (email === "" || !email.includes("@")) {
+        document.getElementById("emailError").innerHTML = "Enter valid email";
+        valid = false;
+    }
+
+    if (phone === "" || phone.length < 10) {
+        document.getElementById("phoneError").innerHTML = "Enter valid phone number";
+        valid = false;
+    }
+
+    if (gender === "") {
+        document.getElementById("genderError").innerHTML = "Select gender";
+        valid = false;
+    }
+
+    if (address === "") {
+        document.getElementById("addressError").innerHTML = "Address is required";
+        valid = false;
+    }
+
+    if (valid) {
+        document.getElementById("successMsg").innerHTML = "Profile updated successfully!";
+    }
+
+    return valid;
+}
+</script>
+
+</body>
+</html>

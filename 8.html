@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f6fc;
+        }
+        .payment-container {
+            width: 420px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px gray;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+        .row input {
+            width: 100%;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="payment-container">
+    <h2>Payment Form</h2>
+    <form onsubmit="return validatePayment()">
+
+        <label>Full Name:</label>
+        <input type="text" id="name">
+        <div class="error" id="nameError"></div>
+
+        <label>Email:</label>
+        <input type="text" id="email">
+        <div class="error" id="emailError"></div>
+
+        <label>Card Number:</label>
+        <input type="text" id="card">
+        <div class="error" id="cardError"></div>
+
+        <div class="row">
+            <div>
+                <label>Expiry Date:</label>
+                <input type="month" id="expiry">
+                <div class="error" id="expiryError"></div>
+            </div>
+            <div>
+                <label>CVV:</label>
+                <input type="password" id="cvv">
+                <div class="error" id="cvvError"></div>
+            </div>
+        </div>
+
+        <label>Payment Method:</label>
+        <select id="method">
+            <option value="">--Select Method--</option>
+            <option value="credit">Credit Card</option>
+            <option value="debit">Debit Card</option>
+            <option value="upi">UPI</option>
+        </select>
+        <div class="error" id="methodError"></div>
+
+        <label>Billing Address:</label>
+        <input type="text" id="address">
+        <div class="error" id="addressError"></div>
+
+        <button type="submit">Pay Now</button>
+    </form>
+</div>
+
+<script>
+function validatePayment() {
+    let valid = true;
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let card = document.getElementById("card").value;
+    let expiry = document.getElementById("expiry").value;
+    let cvv = document.getElementById("cvv").value;
+    let method = document.getElementById("method").value;
+    let address = document.getElementById("address").value;
+
+    // Clear errors
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("cardError").innerHTML = "";
+    document.getElementById("expiryError").innerHTML = "";
+    document.getElementById("cvvError").innerHTML = "";
+    document.getElementById("methodError").innerHTML = "";
+    document.getElementById("addressError").innerHTML = "";
+
+    if (name === "") {
+        document.getElementById("nameError").innerHTML = "Name is required";
+        valid = false;
+    }
+
+    if (email === "" || !email.includes("@")) {
+        document.getElementById("emailError").innerHTML = "Valid email required";
+        valid = false;
+    }
+
+    if (card === "" || card.length < 16) {
+        document.getElementById("cardError").innerHTML = "Enter valid card number";
+        valid = false;
+    }
+
+    if (expiry === "") {
+        document.getElementById("expiryError").innerHTML = "Select expiry date";
+        valid = false;
+    }
+
+    if (cvv === "" || cvv.length < 3) {
+        document.getElementById("cvvError").innerHTML = "Enter valid CVV";
+        valid = false;
+    }
+
+    if (method === "") {
+        document.getElementById("methodError").innerHTML = "Select payment method";
+        valid = false;
+    }
+
+    if (address === "") {
+        document.getElementById("addressError").innerHTML = "Address required";
+        valid = false;
+    }
+
+    return valid;
+}
+</script>
+
+</body>
+</html>

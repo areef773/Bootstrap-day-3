@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Order Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f8;
+        }
+        .order-container {
+            width: 420px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px gray;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .total {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="order-container">
+    <h2>Product Order Form</h2>
+    <form onsubmit="return validateOrder()">
+
+        <label>Customer Name:</label>
+        <input type="text" id="name">
+        <div class="error" id="nameError"></div>
+
+        <label>Email:</label>
+        <input type="text" id="email">
+        <div class="error" id="emailError"></div>
+
+        <label>Select Product:</label>
+        <select id="product" onchange="calculateTotal()">
+            <option value="">--Select Product--</option>
+            <option value="500">Headphones - ₹500</option>
+            <option value="1000">Smart Watch - ₹1000</option>
+            <option value="1500">Bluetooth Speaker - ₹1500</option>
+        </select>
+        <div class="error" id="productError"></div>
+
+        <label>Quantity:</label>
+        <input type="number" id="quantity" min="1" onchange="calculateTotal()">
+        <div class="error" id="quantityError"></div>
+
+        <div class="total" id="totalAmount">Total: ₹0</div>
+
+        <button type="submit">Place Order</button>
+    </form>
+</div>
+
+<script>
+function calculateTotal() {
+    let price = document.getElementById("product").value;
+    let qty = document.getElementById("quantity").value;
+    let total = price * qty;
+
+    if (price && qty) {
+        document.getElementById("totalAmount").innerHTML = "Total: ₹" + total;
+    }
+}
+
+function validateOrder() {
+    let valid = true;
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let product = document.getElementById("product").value;
+    let quantity = document.getElementById("quantity").value;
+
+    // Clear errors
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("productError").innerHTML = "";
+    document.getElementById("quantityError").innerHTML = "";
+
+    if (name === "") {
+        document.getElementById("nameError").innerHTML = "Name is required";
+        valid = false;
+    }
+
+    if (email === "" || !email.includes("@")) {
+        document.getElementById("emailError").innerHTML = "Valid email required";
+        valid = false;
+    }
+
+    if (product === "") {
+        document.getElementById("productError").innerHTML = "Select a product";
+        valid = false;
+    }
+
+    if (quantity === "" || quantity <= 0) {
+        document.getElementById("quantityError").innerHTML = "Enter valid quantity";
+        valid = false;
+    }
+
+    return valid;
+}
+</script>
+
+</body>
+</html>

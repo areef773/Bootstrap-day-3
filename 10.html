@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f9f6;
+        }
+        .survey-container {
+            width: 450px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px gray;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .checkbox-group {
+            margin: 10px 0;
+        }
+        .checkbox-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .checkbox-group input {
+            width: auto;
+            margin-right: 8px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #20c997;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #17a589;
+        }
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+        .success {
+            color: green;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="survey-container">
+    <h2>Survey Form</h2>
+    <form onsubmit="return validateSurvey()">
+
+        <label>Name:</label>
+        <input type="text" id="name">
+        <div class="error" id="nameError"></div>
+
+        <label>Email:</label>
+        <input type="text" id="email">
+        <div class="error" id="emailError"></div>
+
+        <label>Select your interests:</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="interest" value="sports"> Sports</label>
+            <label><input type="checkbox" name="interest" value="music"> Music</label>
+            <label><input type="checkbox" name="interest" value="technology"> Technology</label>
+            <label><input type="checkbox" name="interest" value="travel"> Travel</label>
+        </div>
+        <div class="error" id="interestError"></div>
+
+        <label>Additional Comments:</label>
+        <textarea id="comments" placeholder="Your feedback..."></textarea>
+
+        <div class="success" id="successMsg"></div>
+
+        <button type="submit">Submit Survey</button>
+    </form>
+</div>
+
+<script>
+function validateSurvey() {
+    let valid = true;
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let interests = document.getElementsByName("interest");
+
+    // Clear messages
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("interestError").innerHTML = "";
+    document.getElementById("successMsg").innerHTML = "";
+
+    if (name === "") {
+        document.getElementById("nameError").innerHTML = "Name is required";
+        valid = false;
+    }
+
+    if (email === "" || !email.includes("@")) {
+        document.getElementById("emailError").innerHTML = "Enter a valid email";
+        valid = false;
+    }
+
+    let checked = false;
+    for (let i = 0; i < interests.length; i++) {
+        if (interests[i].checked) {
+            checked = true;
+            break;
+        }
+    }
+
+    if (!checked) {
+        document.getElementById("interestError").innerHTML = "Select at least one interest";
+        valid = false;
+    }
+
+    if (valid) {
+        document.getElementById("successMsg").innerHTML = "Survey submitted successfully!";
+    }
+
+    return valid;
+}
+</script>
+
+</body>
+</html>
